@@ -12,9 +12,9 @@ import (
 const (
 	url         = "http://srv.msk01.gigacorp.local/_stats"
 	maxLoad     = 30
-	memLimit    = 0.8
-	diskLimit   = 0.9
-	netLimit    = 0.9
+	memLimit    = 80 // проценты
+	diskLimit   = 90 // проценты
+	netLimit    = 90 // проценты
 	maxErrors   = 3
 	pollingTime = 10 * time.Second
 )
@@ -59,30 +59,30 @@ func main() {
 			values[i], _ = strconv.ParseFloat(v, 64)
 		}
 
-		load := values[0]
-		memTotal, memUsed := values[1], values[2]
-		diskTotal, diskUsed := values[3], values[4]
-		netTotal, netUsed := values[5], values[6]
+		load := int(values[0])
+		memTotal, memUsed := int(values[1]), int(values[2])
+		diskTotal, diskUsed := int(values[3]), int(values[4])
+		netTotal, netUsed := int(values[5]), int(values[6])
 
 		if load > maxLoad {
-			fmt.Printf("Load Average is too high: %.0f\n", load)
+			fmt.Printf("Load Average is too high: %d\n", load)
 		}
 
-		memUsage := memUsed / memTotal
+		memUsage := memUsed * 100 / memTotal
 		if memUsage > memLimit {
-			fmt.Printf("Memory usage too high: %.0f%%\n", memUsage*100)
+			fmt.Printf("Memory usage too high: %d%%\n", memUsage)
 		}
 
-		diskUsage := diskUsed / diskTotal
+		diskUsage := diskUsed * 100 / diskTotal
 		if diskUsage > diskLimit {
 			freeMb := (diskTotal - diskUsed) / (1024 * 1024)
-			fmt.Printf("Free disk space is too low: %.0f Mb left\n", freeMb)
+			fmt.Printf("Free disk space is too low: %d Mb left\n", freeMb)
 		}
 
-		netUsage := netUsed / netTotal
+		netUsage := netUsed * 100 / netTotal
 		if netUsage > netLimit {
 			freeMbit := (netTotal - netUsed) * 8 / (1024 * 1024)
-			fmt.Printf("Network bandwidth usage high: %.0f Mbit/s available\n", freeMbit)
+			fmt.Printf("Network bandwidth usage high: %d Mbit/s available\n", freeMbit)
 		}
 
 		time.Sleep(pollingTime)
