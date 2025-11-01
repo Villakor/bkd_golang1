@@ -12,9 +12,9 @@ import (
 const (
 	url         = "http://srv.msk01.gigacorp.local/_stats"
 	maxLoad     = 30
-	memLimit    = 80 // проценты
-	diskLimit   = 90 // проценты
-	netLimit    = 90 // проценты
+	memLimit    = 80 // %
+	diskLimit   = 90 // %
+	netLimit    = 90 // %
 	maxErrors   = 3
 	pollingTime = 10 * time.Second
 )
@@ -81,8 +81,8 @@ func main() {
 
 		netUsage := netUsed * 100 / netTotal
 		if netUsage > netLimit {
-			// Переводим свободную полосу сети в мегабиты через 1024*1024
-			freeMbit := int((netTotal - netUsed) * 8 / (1024 * 1024))
+			// Входные данные уже в бит/с. Переводим в десятичные мегабиты/с.
+			freeMbit := int((netTotal - netUsed) / 1_000_000)
 			fmt.Printf("Network bandwidth usage high: %d Mbit/s available\n", freeMbit)
 		}
 
