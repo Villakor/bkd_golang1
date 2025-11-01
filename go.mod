@@ -1,6 +1,6 @@
 module github.com/Yandex-Practicum/go-autotests
 
-go 1.25.3
+go 1.22.12
 
 require (
 	github.com/eltorocorp/drygopher v1.1.2
