@@ -8,7 +8,7 @@ jobs:
 
   autotest:
     runs-on: ubuntu-latest
-    container: golang:1.25.3
+    container: golang:1.22
 
     steps:
       - name: Checkout code
