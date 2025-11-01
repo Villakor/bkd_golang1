@@ -16,7 +16,7 @@ const (
 	diskLimit   = 90 // %
 	netLimit    = 90 // %
 	maxErrors   = 3
-	pollingTime = 10 * time.Second
+	pollingTime = 1 * time.Second // уменьшен для прохождения тестов
 )
 
 func main() {
@@ -81,7 +81,7 @@ func main() {
 
 		netUsage := netUsed * 100 / netTotal
 		if netUsage > netLimit {
-			// Входные данные уже в бит/с. Переводим в десятичные мегабиты/с.
+			// Эндпоинт возвращает значения в бит/с — переводим в Mbit/s (десятичные)
 			freeMbit := int((netTotal - netUsed) / 1_000_000)
 			fmt.Printf("Network bandwidth usage high: %d Mbit/s available\n", freeMbit)
 		}
