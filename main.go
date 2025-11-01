@@ -81,8 +81,8 @@ func main() {
 
 		netUsage := netUsed * 100 / netTotal
 		if netUsage > netLimit {
-			// Переводим в мегабиты по стандарту 1 Mbit = 1_000_000 bit
-			freeMbit := int((netTotal - netUsed) * 8 / 1_000_000)
+			// Переводим свободную полосу сети в мегабиты через 1024*1024
+			freeMbit := int((netTotal - netUsed) * 8 / (1024 * 1024))
 			fmt.Printf("Network bandwidth usage high: %d Mbit/s available\n", freeMbit)
 		}
 
