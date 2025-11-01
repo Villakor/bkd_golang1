@@ -15,7 +15,7 @@ const (
 	memLimit    = 0.8
 	diskLimit   = 0.9
 	netLimit    = 0.9
-	maxErrors   = 3
+	maxErrors   = 4
 	pollingTime = 10 * time.Second
 )
 
