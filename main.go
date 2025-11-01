@@ -15,7 +15,7 @@ const (
 	memLimit    = 0.8
 	diskLimit   = 0.9
 	netLimit    = 0.9
-	maxErrors   = 4
+	maxErrors   = 3
 	pollingTime = 10 * time.Second
 )
 
@@ -65,12 +65,12 @@ func main() {
 		netTotal, netUsed := values[5], values[6]
 
 		if load > maxLoad {
-			fmt.Printf("Load Average is too high: %.2f\n", load)
+			fmt.Printf("Load Average is too high: %.0f\n", load)
 		}
 
 		memUsage := memUsed / memTotal
 		if memUsage > memLimit {
-			fmt.Printf("Memory usage too high: %.2f%%\n", memUsage*100)
+			fmt.Printf("Memory usage too high: %.0f%%\n", memUsage*100)
 		}
 
 		diskUsage := diskUsed / diskTotal
@@ -82,7 +82,7 @@ func main() {
 		netUsage := netUsed / netTotal
 		if netUsage > netLimit {
 			freeMbit := (netTotal - netUsed) * 8 / (1024 * 1024)
-			fmt.Printf("Network bandwidth usage high: %.2f Mbit/s available\n", freeMbit)
+			fmt.Printf("Network bandwidth usage high: %.0f Mbit/s available\n", freeMbit)
 		}
 
 		time.Sleep(pollingTime)
